@@ -1,0 +1,8 @@
+{
+  "name": "Cybertip Responder Training",
+  "description": "An interactive tutorial platform for law enforcement officers to master the processing and analysis of NCMEC Cybertips, featuring a mock viewer and an AI-powered legal investigator advisor.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

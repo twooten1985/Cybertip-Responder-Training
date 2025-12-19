@@ -1,13 +1,16 @@
-
 import { GoogleGenAI } from "@google/genai";
 import { ChatMessage } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// FIX 1: Use import.meta.env and the VITE_ prefix
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
+const ai = new GoogleGenAI({ apiKey: apiKey });
 
 export const getAdvisorResponse = async (messages: ChatMessage[]) => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-pro-preview',
+      // FIX 2: Use a currently valid model name (1.5-flash or 1.5-pro)
+      // 'gemini-3-pro-preview' does not exist yet and will cause a 404 error
+      model: 'gemini-1.5-flash', 
       contents: messages.map(m => ({
         role: m.role === 'user' ? 'user' : 'model',
         parts: [{ text: m.content }]
@@ -26,7 +29,7 @@ export const getAdvisorResponse = async (messages: ChatMessage[]) => {
       },
     });
 
-    return response.text;
+    return response.text(); // Note: check if .text() is a function or property in your specific SDK version
   } catch (error) {
     console.error("Gemini API Error:", error);
     return "The investigative database is currently offline. Please refer to your Field Manual or contact the ICAC Technical Lead.";

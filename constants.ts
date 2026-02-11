@@ -40,7 +40,7 @@ export const TUTORIAL_MODULES: TutorialModule[] = [
   },
   {
     id: 'certification',
-    title: 'Certification Exam',
+    title: 'Final Evaluation',
     description: 'Complete the 20-question final test to earn your training certificate.',
     icon: 'fa-certificate'
   }

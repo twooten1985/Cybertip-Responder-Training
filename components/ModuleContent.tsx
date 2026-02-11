@@ -22,8 +22,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
   // Certification State
   const [examAnswers, setExamAnswers] = useState<Record<number, number>>({});
   const [isExamSubmitted, setIsExamSubmitted] = useState(false);
-  const [showNamePopup, setShowNamePopup] = useState(false);
-  const [userName, setUserName] = useState('');
 
   // Simple deterministic string hash for demo purposes
   const getSimpleHash = (str: string) => {
@@ -76,40 +74,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
 
   const handleExamSubmit = () => {
     setIsExamSubmitted(true);
-    const score = Object.entries(examAnswers).filter(([idx, ans]) => questions[parseInt(idx)].correct === ans).length;
-    const percentage = (score / questions.length) * 100;
-    if (percentage >= 80) {
-      setShowNamePopup(true);
-    }
-  };
-
-  const generateCertificate = () => {
-    const certWindow = window.open('', '_blank');
-    if (!certWindow) return;
-    certWindow.document.write(`
-      <html>
-        <head><title>Certificate - ${userName}</title><style>
-          body { font-family: 'Arial'; display: flex; align-items: center; justify-content: center; height: 100vh; background: #f1f5f9; }
-          .cert { width: 850px; padding: 60px; border: 15px solid #1e3a8a; background: white; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.1); position: relative; }
-          h1 { color: #1e3a8a; font-size: 55px; margin-bottom: 5px; text-transform: uppercase; }
-          h2 { color: #64748b; font-size: 24px; font-weight: normal; margin-bottom: 50px; letter-spacing: 2px; }
-          .name { font-size: 42px; font-weight: bold; border-bottom: 2px solid #e2e8f0; display: inline-block; padding: 0 50px; margin: 30px 0; color: #0f172a; }
-          p { font-size: 20px; line-height: 1.6; color: #334155; }
-          .footer { display: flex; justify-content: space-around; margin-top: 50px; font-size: 14px; color: #94a3b8; }
-        </style></head>
-        <body><div class="cert">
-          <h1>Certificate of Completion</h1><h2>Cybertip Investigator Training</h2>
-          <p>This is to certify that</p>
-          <div class="name">${userName || 'Investigator'}</div>
-          <p>has successfully completed the comprehensive professional training module</p>
-          <p><strong>Basic Cybertip Training and awareness</strong></p>
-          <div class="footer">
-            <div>Certification ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
-            <div>Issued: ${new Date().toLocaleDateString()}</div>
-          </div>
-        </div><script>window.print();</script></body></html>
-    `);
-    certWindow.document.close();
   };
 
   const handleCalcChange = (val: string) => {
@@ -142,7 +106,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             </div>
           </section>
 
-          {/* New ISP vs ESP Relationship Section */}
           <section className="bg-slate-50 border rounded-2xl p-6 shadow-sm space-y-6">
             <h3 className="text-lg font-bold text-slate-800 flex items-center">
               <i className="fas fa-network-wired mr-2 text-blue-600"></i> ISP vs. ESP: Roles in Investigations
@@ -273,7 +236,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             </div>
           </section>
 
-          {/* New IP Architecture Section (IPv4 vs IPv6) */}
           <section className="bg-white border rounded-2xl p-6 shadow-sm space-y-6">
             <h3 className="text-xl font-bold text-slate-800 flex items-center">
               <i className="fas fa-route mr-2 text-blue-600"></i> IP Architecture: IPv4 vs. IPv6
@@ -283,7 +245,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             </p>
 
             <div className="grid md:grid-cols-2 gap-8">
-              {/* IPv4 Diagram */}
               <div className="space-y-4">
                 <h4 className="text-[10px] font-bold text-blue-900 uppercase tracking-widest flex items-center">
                    <div className="w-2 h-2 bg-blue-500 rounded-full mr-2"></div> IPv4: 32-Bit Decimal
@@ -301,7 +262,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
                 </div>
               </div>
 
-              {/* IPv6 Diagram */}
               <div className="space-y-4">
                 <h4 className="text-[10px] font-bold text-purple-900 uppercase tracking-widest flex items-center">
                    <div className="w-2 h-2 bg-purple-500 rounded-full mr-2"></div> IPv6: 128-Bit Hexadecimal
@@ -347,7 +307,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             </div>
           </section>
 
-          {/* Binary Octet Calculator Section */}
           <section className="bg-slate-900 text-white rounded-3xl p-8 shadow-2xl relative">
             <h3 className="text-xl font-bold mb-6 flex items-center text-blue-400">
               <i className="fas fa-binary mr-3 bg-slate-800 p-2 rounded-lg"></i> Binary Octet Review
@@ -385,7 +344,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             </div>
           </section>
 
-          {/* New Subsection for Media Security */}
           <section className="bg-white border rounded-2xl p-6 shadow-sm space-y-6">
             <h3 className="text-xl font-bold text-slate-800 flex items-center">
               <i className="fas fa-vault mr-2 text-red-600"></i> Safely Storing and Securing Sensitive Media for Case Work
@@ -446,7 +404,6 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             </p>
           </section>
 
-          {/* Interactive Pixel Hash Simulation */}
           <section className="bg-slate-900 text-white rounded-3xl p-8 shadow-2xl relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-5">
               <i className="fas fa-image text-[200px]"></i>
@@ -507,6 +464,32 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
                 </li>
               ))}
             </ul>
+          </section>
+
+          {/* New Microsoft PhotoDNA Section */}
+          <section className="bg-white border rounded-2xl p-6 shadow-sm space-y-4 border-l-8 border-l-blue-600">
+            <div className="flex items-center space-x-3 text-blue-900 mb-2">
+              <i className="fas fa-microsoft text-3xl"></i>
+              <h3 className="text-xl font-bold uppercase tracking-tight">Microsoft PhotoDNA</h3>
+            </div>
+            <p className="text-sm text-slate-700 leading-relaxed">
+              Standard hashes (MD5, SHA1) are <strong>brittle</strong>—changing just one pixel or adding metadata results in a completely different hash. 
+              <strong> Microsoft PhotoDNA</strong> is a <em>robust</em> visual fingerprinting technology.
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                <h4 className="font-bold text-[10px] text-blue-900 uppercase tracking-widest mb-2">How it works:</h4>
+                <p className="text-[11px] text-blue-800">
+                  PhotoDNA converts an image to a grayscale representation and analyzes its visual features and landmarks. It maps the <strong>visual data</strong> rather than the digital binary code.
+                </p>
+              </div>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                <h4 className="font-bold text-[10px] text-slate-900 uppercase tracking-widest mb-2">Investigative Advantage:</h4>
+                <p className="text-[11px] text-slate-800">
+                  It can identify the <strong>same image</strong> even if it has been resized, compressed, slightly cropped, or converted to a different file format. This is the primary tool used by ESPs to scan billions of files for known contraband.
+                </p>
+              </div>
+            </div>
           </section>
         </div>
       );
@@ -616,6 +599,34 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
               </div>
             )}
           </div>
+
+          {/* New Akerman Ruling Section */}
+          <section className="bg-red-900 text-white rounded-2xl p-6 shadow-lg space-y-4 border-l-8 border-l-red-500">
+            <div className="flex items-center space-x-3">
+              <i className="fas fa-gavel text-3xl text-red-400"></i>
+              <h3 className="text-xl font-bold uppercase tracking-tight">The Akerman Ruling (US v. Ackerman)</h3>
+            </div>
+            <p className="text-xs opacity-90 leading-relaxed">
+              In <em>United States v. Ackerman</em>, 831 F.3d 1292 (10th Cir. 2016), the court established a critical precedent regarding NCMEC's relationship with the government.
+            </p>
+            <div className="bg-black/20 p-4 rounded-xl space-y-3">
+               <div className="flex items-start space-x-2">
+                 <i className="fas fa-handcuffs mt-1 text-red-300"></i>
+                 <p className="text-[11px]">
+                   <strong>Government Agent Status:</strong> The court held that because of NCMEC's statutory mandate and deep integration with law enforcement, it acts as a <strong>"government agent"</strong> rather than a purely private party.
+                 </p>
+               </div>
+               <div className="flex items-start space-x-2">
+                 <i className="fas fa-shield-halved mt-1 text-red-300"></i>
+                 <p className="text-[11px]">
+                   <strong>Fourth Amendment Implications:</strong> Under the <em>Private Search Doctrine</em>, LE can only view what the private party (the ESP/NCMEC) has already viewed. Because NCMEC is an agent, any search <em>beyond</em> the specific files reported in the tip requires a Search Warrant based on Probable Cause.
+                 </p>
+               </div>
+            </div>
+            <p className="text-[10px] italic text-red-200">
+              <strong>OFFICER SAFETY WARNING:</strong> Do not open additional files provided in a NCMEC data package that were NOT explicitly flagged as contraband in the initial report without first obtaining a warrant. Doing so may result in the suppression of all evidence under the exclusionary rule.
+            </p>
+          </section>
         </div>
       );
 
@@ -647,7 +658,7 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
     case 'certification':
       return (
         <div className="space-y-6 p-4">
-          <h2 className="text-2xl font-bold text-blue-900 border-b pb-2">Certification Exam (20 Questions)</h2>
+          <h2 className="text-2xl font-bold text-blue-900 border-b pb-2">Final Evaluation</h2>
           <div className="bg-white border-2 border-blue-50 rounded-2xl p-8 shadow-md">
             {!isExamSubmitted ? (
               <div className="space-y-8">
@@ -666,30 +677,37 @@ export const ModuleContent: React.FC<ModuleContentProps> = ({ moduleId }) => {
             ) : (
               <div className="text-center space-y-6 py-8">
                 {(() => {
-                  const score = Object.entries(examAnswers).filter(([idx, ans]) => questions[parseInt(idx)].correct === ans).length;
-                  const percentage = (score / questions.length) * 100;
+                  const scoreCount = Object.entries(examAnswers).filter(([idx, ans]) => questions[parseInt(idx)].correct === ans).length;
+                  const percentage = (scoreCount / questions.length) * 100;
                   const passed = percentage >= 80;
                   return (
-                    <>
-                      <div className={`text-7xl ${passed ? 'text-green-500 animate-bounce' : 'text-red-500'}`}><i className={`fas ${passed ? 'fa-circle-check' : 'fa-circle-xmark'}`}></i></div>
-                      <h3 className="text-3xl font-extrabold">{passed ? 'Training Passed!' : 'Exam Not Passed'}</h3>
-                      <p className="text-xl text-slate-600">Final Score: <span className="font-bold text-slate-900">{score}/20 (${percentage}%)</span></p>
-                      {!passed && <button onClick={() => { setIsExamSubmitted(false); setExamAnswers({}); }} className="px-10 py-3 bg-slate-900 text-white rounded-xl font-bold">Retake Exam</button>}
-                    </>
+                    <div className="animate-in fade-in zoom-in duration-500">
+                      <div className={`text-7xl mb-4 ${passed ? 'text-green-500' : 'text-red-500'}`}>
+                        <i className={`fas ${passed ? 'fa-medal animate-bounce' : 'fa-circle-xmark'}`}></i>
+                      </div>
+                      <h3 className="text-3xl font-extrabold text-blue-900">
+                        {passed ? 'Congratulations, Officer!' : 'Evaluation Incomplete'}
+                      </h3>
+                      <p className="text-xl text-slate-600 mt-2">
+                        {passed 
+                          ? 'You have successfully completed the Cybertip Investigator Training curriculum.' 
+                          : 'You did not achieve the required passing score of 80%.'}
+                      </p>
+                      <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 inline-block mt-6">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-1">Final Performance Score</span>
+                        <div className="text-4xl font-black text-slate-900">{scoreCount} / {questions.length} ({percentage}%)</div>
+                      </div>
+                      <div className="mt-8 flex justify-center space-x-4">
+                        {!passed && (
+                          <button onClick={() => { setIsExamSubmitted(false); setExamAnswers({}); }} className="px-10 py-3 bg-blue-900 text-white rounded-xl font-bold shadow-lg hover:bg-blue-800">Retake Exam</button>
+                        )}
+                      </div>
+                    </div>
                   );
                 })()}
               </div>
             )}
           </div>
-          {showNamePopup && (
-            <div className="fixed inset-0 bg-slate-900/80 flex items-center justify-center z-[300] p-4 backdrop-blur-sm">
-              <div className="bg-white rounded-3xl p-10 max-w-md w-full shadow-2xl space-y-6 border-t-8 border-blue-900 animate-in zoom-in duration-300">
-                <div className="text-center"><i className="fas fa-medal text-6xl text-yellow-500 mb-4"></i><h3 className="text-2xl font-extrabold text-blue-900">Training Complete!</h3></div>
-                <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} placeholder="Investigator Name & Title" className="w-full p-4 border-2 border-slate-200 rounded-2xl outline-none focus:border-blue-900 text-center font-bold text-lg" />
-                <button onClick={generateCertificate} className="w-full py-4 bg-blue-900 text-white rounded-2xl font-bold text-lg shadow-xl hover:bg-blue-800 transition-all">Download Certificate</button>
-              </div>
-            </div>
-          )}
         </div>
       );
     default:

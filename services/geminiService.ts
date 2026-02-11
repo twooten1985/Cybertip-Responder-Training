@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 import { ChatMessage } from "../types";
 
 // Always use process.env.API_KEY for the API key as per GenAI SDK guidelines.
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getAdvisorResponse = async (messages: ChatMessage[]) => {
   try {

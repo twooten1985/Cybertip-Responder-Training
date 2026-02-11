@@ -2,10 +2,12 @@
 import { GoogleGenAI } from "@google/genai";
 import { ChatMessage } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
+// Always use process.env.API_KEY for the API key as per GenAI SDK guidelines.
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getAdvisorResponse = async (messages: ChatMessage[]) => {
   try {
+    // Call ai.models.generateContent directly to perform the text task with the specified model and prompt history.
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: messages.map(m => ({
@@ -26,7 +28,8 @@ export const getAdvisorResponse = async (messages: ChatMessage[]) => {
       },
     });
 
-    return response.text;
+    // Access the .text property directly (it is a getter, not a method).
+    return response.text ?? "I'm sorry, I was unable to process that investigative query at this time.";
   } catch (error) {
     console.error("Gemini API Error:", error);
     return "The investigative database is currently offline. Please refer to your Field Manual or contact the ICAC Technical Lead.";

@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <div className="max-w-2xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-500">
           <div className="bg-blue-900 p-8 text-center text-white">
             <div className="bg-blue-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <i className="fas fa-shield-heart text-3xl"></i>
+              <i className="fas fa-shield-halved text-3xl"></i>
             </div>
             <h1 className="text-3xl font-extrabold tracking-tight uppercase">Cybertip Investigator Training</h1>
             <p className="text-blue-300 text-sm font-mono mt-2 tracking-widest uppercase">Official Training Portal</p>
@@ -29,9 +29,7 @@ const App: React.FC = () => {
               <h2 className="text-xl font-bold text-slate-900 border-b pb-2">Program Overview</h2>
               <p className="text-slate-600 leading-relaxed text-sm">
                 This interactive tutorial platform is designed to provide law enforcement officers with a comprehensive understanding of the 
-                <strong> NCMEC CyberTipline</strong> ecosystem. This program facilitates mastery in processing technical identifiers, 
-                understanding the legal statutory framework (18 U.S.C. § 2258A & § 2703), and utilizing AI-assisted investigative logic 
-                to effectively unmask and identify subjects in child exploitation cases.
+                <strong> NCMEC CyberTipline</strong> ecosystem.
               </p>
             </div>
 
@@ -86,7 +84,7 @@ const App: React.FC = () => {
       <header className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between shadow-md z-10">
         <div className="flex items-center space-x-3">
           <div className="bg-blue-600 p-2 rounded">
-            <i className="fas fa-shield-heart text-white text-xl"></i>
+            <i className="fas fa-shield-halved text-white text-xl"></i>
           </div>
           <div>
             <h1 className="text-lg font-bold uppercase tracking-tight">Cybertip Responder Training</h1>
